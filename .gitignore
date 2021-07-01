@@ -39,3 +39,13 @@ luac.out
 *.x86_64
 *.hex
 
+# Temporary files
+client_body_temp/
+fastcgi_temp/
+proxy_temp/
+scgi_temp/
+uwsgi_temp/
+
+# Log files
+*.pid
+*.log
