@@ -1,0 +1,64 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install OpenResty
+      run: |
+        sudo apt install ntpdate
+        sudo ntpdate -v time.google.com
+        sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates
+        wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
+        echo "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" > openresty.list
+        sudo cp openresty.list /etc/apt/sources.list.d/
+        sudo apt-get update
+        sudo apt-get -y install --no-install-recommends openresty
+        which openresty
+        openresty -V
+    - name: Install LuaRocks and system dependencies
+      run: |
+        sudo apt update
+        sudo apt install make gcc libpcre3 libpcre3-dev
+        wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz
+        tar zxpf luarocks-3.3.1.tar.gz
+        cd luarocks-3.3.1
+        ./configure --prefix=/usr/local/openresty/luajit \
+        --with-lua=/usr/local/openresty/luajit/ \
+        --lua-suffix=jit-2.1.0-beta3 \
+        --with-lua-include=/usr/local/openresty/luajit/include/luajit-2.1
+        sudo make
+        sudo make install
+        cd ..
+    - name: Install Casbin
+      run: |
+        sudo /usr/local/openresty/luajit/bin/luarocks install https://raw.githubusercontent.com/casbin/lua-casbin/master/casbin-1.11.0-1.rockspec
+    - name: Start the server
+      run: |
+        cd openresty_example
+        sudo openresty -p $PWD/
+        cd ..
+    - name: Set up Lua
+      uses: leafo/gh-actions-lua@v8.0.0
+      with:
+        luaVersion: 5.1
+    - name: Set up luarocks
+      uses: leafo/gh-actions-luarocks@v4.0.0
+    - name: Set up testing env
+      run: |
+        luarocks install busted
+        luarocks install busted-htest
+        luarocks install luasocket
+    - name: Run test
+      run: |
+        busted middleware_test.lua -o htest
