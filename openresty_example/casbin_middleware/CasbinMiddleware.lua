@@ -16,13 +16,19 @@ local Enforcer = require("casbin")
 
 CasbinMiddleware = {}
 
--- creates a new Casbin Middleware based on authz_model.conf and authz_policy.csv
-function CasbinMiddleware:new(next)
+--[[
+    - creates a new Casbin Middleware based on model path and policy path
+    - if no model passed in, uses the default authz_model.conf
+    - if no policy passed in, uses the default authz_policy.csv
+]]
+function CasbinMiddleware:new(next, modelPath, policyPath)
     local o = {}
     setmetatable(o, self)
     self.__index = self
 
-    local e = Enforcer:new("casbin_middleware/authz_model.conf", "casbin_middleware/authz_policy.csv")
+    if not modelPath then modelPath = "casbin_middleware/authz_model.conf" end
+    if not policyPath then policyPath = "casbin_middleware/authz_policy.csv" end
+    local e = Enforcer:new(modelPath, policyPath)
     o.enforcer = e
     o.next = next -- function called if request is authorised
     return o

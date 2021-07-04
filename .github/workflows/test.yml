@@ -24,8 +24,6 @@ jobs:
         sudo cp openresty.list /etc/apt/sources.list.d/
         sudo apt-get update
         sudo apt-get -y install --no-install-recommends openresty
-        which openresty
-        openresty -V
     - name: Install LuaRocks and system dependencies
       run: |
         sudo apt update
