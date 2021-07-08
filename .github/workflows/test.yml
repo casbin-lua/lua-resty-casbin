@@ -24,6 +24,7 @@ jobs:
         sudo cp openresty.list /etc/apt/sources.list.d/
         sudo apt-get update
         sudo apt-get -y install --no-install-recommends openresty
+        sudo apt-get install openresty-opm
     - name: Install LuaRocks and system dependencies
       run: |
         sudo apt update
@@ -60,3 +61,11 @@ jobs:
     - name: Run test
       run: |
         busted middleware_test.lua -o htest
+    - name: Upload to OPM
+      run: |
+        opm --help
+        cat > ~/.opmrc << EOF
+        github_account = casbin-lua
+        github_token = ${{ secrets.GH_TOKEN }}
+        EOF
+        opm upload
