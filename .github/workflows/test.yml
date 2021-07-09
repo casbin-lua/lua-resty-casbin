@@ -41,7 +41,7 @@ jobs:
         cd ..
     - name: Install Casbin
       run: |
-        sudo /usr/local/openresty/luajit/bin/luarocks install https://raw.githubusercontent.com/casbin/lua-casbin/master/casbin-1.11.0-1.rockspec
+        sudo /usr/local/openresty/luajit/bin/luarocks install https://raw.githubusercontent.com/casbin/lua-casbin/master/casbin-1.16.1-1.rockspec
     - name: Start the server
       run: |
         cd openresty_example
