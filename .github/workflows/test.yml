@@ -61,13 +61,3 @@ jobs:
     - name: Run test
       run: |
         busted middleware_test.lua -o htest
-    - name: Upload to OPM
-      run: |
-        opm --help
-        cat > ~/.opmrc << EOF
-        github_account = casbin-lua
-        github_token = ${{ secrets.GH_TOKEN }}
-        upload_server=https://opm.openresty.org
-        download_server=https://opm.openresty.org
-        EOF
-        opm upload

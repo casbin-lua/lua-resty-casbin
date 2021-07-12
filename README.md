@@ -38,10 +38,10 @@ sudo apt install gcc libpcre3 libpcre3-dev
 
 **NOTE**: If you use `yum` you could use `pcre` and `pcre-devel` for PCRE.
 
-Then install Casbin's latest current release (v1.11.0) using:
+Then install Casbin's latest current release (v1.16.1) using:
 
 ```
-sudo /usr/local/openresty/luajit/bin/luarocks install https://raw.githubusercontent.com/casbin/lua-casbin/master/casbin-1.11.0-1.rockspec
+sudo /usr/local/openresty/luajit/bin/luarocks install https://raw.githubusercontent.com/casbin/lua-casbin/master/casbin-1.16.1-1.rockspec
 
 ```
 
@@ -50,7 +50,10 @@ sudo /usr/local/openresty/luajit/bin/luarocks install https://raw.githubusercont
 
 ## Usage
 
-- Copy the `casbin_middleware` folder to the top level (`/`) of your OpenResty application.
+- Install `lua-resty-casbin` by LuaRocks:
+```
+sudo /usr/local/openresty/luajit/bin/luarocks install https://raw.githubusercontent.com/casbin-lua/lua-resty-casbin/master/lua-resty-casbin-1.0.0-1.rockspec
+```
 - In your `conf/nginx.conf`, initialize a CasbinMiddleware in the `init_by_lua_block` as (where `authorizedRequest` is a function which is called after a request is authorised):
 ```lua
 e = CasbinMiddleware:new(authorizedRequest)
