@@ -13,6 +13,8 @@ You can follow [this guide](https://blog.openresty.com/en/ubuntu20-or-install/) 
 If you do not have LuaRocks installed for OpenResty then install it by:
 
 ```
+sudo apt install make wget unzip zip
+
 wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz
 tar zxpf luarocks-3.3.1.tar.gz
 cd luarocks-3.3.1
@@ -38,10 +40,10 @@ sudo apt install gcc libpcre3 libpcre3-dev
 
 **NOTE**: If you use `yum` you could use `pcre` and `pcre-devel` for PCRE.
 
-Then install Casbin's latest current release (v1.16.1) using:
+Then install Casbin's latest current release using:
 
 ```
-sudo /usr/local/openresty/luajit/bin/luarocks install https://raw.githubusercontent.com/casbin/lua-casbin/master/casbin-1.16.1-1.rockspec
+sudo /usr/local/openresty/luajit/bin/luarocks install casbin
 
 ```
 
