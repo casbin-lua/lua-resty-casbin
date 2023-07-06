@@ -1,7 +1,7 @@
 # lua-resty-casbin
 
 [![GitHub Action](https://github.com/casbin-lua/lua-resty-casbin/workflows/test/badge.svg?branch=master)](https://github.com/casbin-lua/lua-resty-casbin/actions)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/casbin/lobby)
+[![Discord](https://img.shields.io/discord/1022748306096537660?logo=discord&label=discord&color=5865F2)](https://discord.gg/S5UjpzGZjN)
 
 lua-resty-casbin is an authorization plugin/middleware for OpenResty, based on [lua-casbin](https://github.com/casbin/lua-casbin/).
 
